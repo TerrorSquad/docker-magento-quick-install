@@ -48,7 +48,7 @@ Below you will find the required steps to set up everything.
     bin/mysql-root < dump.sql
     ```
 
-    > We using root user here instead of the regular magento user because many Magento 2 dumps have DEFINER root in them, which prefents regular users from importing.
+    > We using root user here instead of the regular magento user because many Magento 2 dumps have DEFINER root in them, which prevents regular users from importing.
 
 - Set the default Magento 2 Base URLs
 
