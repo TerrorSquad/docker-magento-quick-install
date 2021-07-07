@@ -76,9 +76,9 @@ You should run all scripts from the root repository directory.
 Do not enter `bin`.
 Simply run `bin/bash` for example for start a bash session inside the php container.
 
-`bin/start` - brings all containers up
-`bin/stop` - brings all containers down
-`bin/restart` - stops and starts the containers
-`bin/bash` - starts a bash session inside the phpfpm container
-`bin/cli` - allows execution of any command under bash inside the container without entering the container. e.g. `bin/cli php -v`
-`bin/mysql` - starts a mysql session inside the db container
+- `bin/start` - brings all containers up
+- `bin/stop` - brings all containers down
+- `bin/restart` - stops and starts the containers
+- `bin/bash` - starts a bash session inside the phpfpm container
+- `bin/cli` - allows execution of any command under bash inside the container without entering the container. e.g. `bin/cli php -v`
+- `bin/mysql` - starts a mysql session inside the db container
