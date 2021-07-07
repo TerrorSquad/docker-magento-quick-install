@@ -33,7 +33,7 @@ Below you will find the required steps to set up everything.
 - Start the docker containers
 
   ```bash
-   bin/up
+   bin/start
   ```
 
 - Install composer packages
