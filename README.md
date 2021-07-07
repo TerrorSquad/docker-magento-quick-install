@@ -30,6 +30,12 @@ Below you will find the required steps to set up everything.
     cp config/env.php src/app/etc
     ```
 
+- Start the docker containers
+
+  ```bash
+   bin/up
+  ```
+
 - Install composer packages
 
     ````bash
@@ -61,3 +67,18 @@ Below you will find the required steps to set up everything.
     ```
 
 ### You should now see your website available at <https://magento.test>
+
+### Notes
+
+There are many helpers scripts in the `bin` directory. Check them out to see what they do.
+
+You should run all scripts from the root repository directory.
+Do not enter `bin`.
+Simply run `bin/bash` for example for start a bash session inside the php container.
+
+`bin/start` - brings all containers up
+`bin/stop` - brings all containers down
+`bin/restart` - stops and starts the containers
+`bin/bash` - starts a bash session inside the phpfpm container
+`bin/cli` - allows execution of any command under bash inside the container without entering the container. e.g. `bin/cli php -v`
+`bin/mysql` - starts a mysql session inside the db container
