@@ -1,0 +1,2 @@
+#!/bin/bash
+bin/cli php -dxdebug.mode=debug -dxdebug.client_host=host.docker.internal -dxdebug.client_port=9003 -dxdebug.start_with_request=yes bin/magento "$@"
