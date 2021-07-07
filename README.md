@@ -60,7 +60,8 @@ Below you will find the required steps to set up everything.
     > Feel free to change the name to whatever you want.
     > Default is magento.test
 
-- Run setup:upgrade
+- Run setup:upgrade.
+- IMPORTANT: Run this only after composer finished installation and database finishes importing.
 
     ```bash
     bin/magento setup:upgrade
