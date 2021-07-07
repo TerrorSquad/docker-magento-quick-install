@@ -14,16 +14,22 @@ services:
     links:
       - db
       - phpfpm
-    volumes: &appvolumes
-      - appdata:/var/www/html
-      - sockdata:/sock
-      - ssldata:/etc/nginx/certs
+    volumes: &<project_name>-appvolumes
+      - <project_name>-appdata:/var/www/html
+      - <project_name>-sockdata:/sock
+      - <project_name>-ssldata:/etc/nginx/certs
+    networks:
+      - <project_name>-network
+
 
   phpfpm:
     image: markoshust/magento-php:7.3-fpm-12
     links:
       - db
-    volumes: *appvolumes
+    volumes: *<project_name>-appvolumes
+    networks:
+      - <project_name>-network
+
 
   db:
     image: percona:5.7
@@ -32,10 +38,15 @@ services:
       - "3306:3306"
     env_file: env/db.env
     volumes:
-      - dbdata:/var/lib/mysql
+      - <project_name>-dbdata:/var/lib/mysql
+    networks:
+      - <project_name>-network
+
 
   redis:
     image: redis:5.0-alpine
+    networks:
+      - <project_name>-network
 
   elasticsearch:
     image: markoshust/magento-elasticsearch:7.7.1-0
@@ -45,6 +56,8 @@ services:
     environment:
       - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    networks:
+      - <project_name>-network
 
   rabbitmq:
     image: rabbitmq:3.7-management-alpine
@@ -52,7 +65,9 @@ services:
       - "15672:15672"
       - "5672:5672"
     volumes:
-      - rabbitmqdata:/var/lib/rabbitmq
+      - <project_name>-rabbitmqdata:/var/lib/rabbitmq
+    networks:
+        - <project_name>-network
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
@@ -62,11 +77,15 @@ services:
   #  tty: true
   #  links:
   #    - db
-  #  volumes: *appvolumes
+  #  volumes: *<project_name>-appvolumes
+
+networks:
+  <project_name>-network:
+    driver: bridge
 
 volumes:
-  appdata:
-  dbdata:
-  rabbitmqdata:
-  sockdata:
-  ssldata:
+  <project_name>-appdata:
+  <project_name>-dbdata:
+  <project_name>-rabbitmqdata:
+  <project_name>-sockdata:
+  <project_name>-ssldata:

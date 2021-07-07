@@ -7,22 +7,30 @@ version: "3"
 
 services:
   app:
-    volumes: &appvolumes
+    volumes: &<project_name>-appvolumes
       - ./env/nginx.conf.sample:/var/www/html/nginx.conf:cached
       - ./src:/var/www/html:cached
+    networks:
+      - <project_name>-network
 
   phpfpm:
-    volumes: *appvolumes
+    volumes: *<project_name>-appvolumes
     # Linux only: host.docker.internal doesn't exist https://github.com/docker/for-linux/issues/264
     # Uncomment two lines below & replace IP with result of: docker run --rm alpine ip route | awk 'NR==1 {print $3}'
     extra_hosts:
      - "host.docker.internal:172.17.0.1"
+    networks:
+      - <project_name>-network
+
 
   mailhog:
     image: mailhog/mailhog
     ports:
       - "1025"
       - "8025:8025"
+    networks:
+      - <project_name>-network
+
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
