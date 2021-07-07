@@ -11,7 +11,7 @@ Below you will find the required steps to set up everything.
     > Change MAGENTO2 to the name of your project
 
     ```bash
-    curl -s <https://raw.githubusercontent.com/TerrorSquad/     docker-magento-quick-install/main/init.sh> | bash -s MAGENTO2 clone
+    curl -s https://raw.githubusercontent.com/TerrorSquad/docker-magento-quick-install/main/init.sh | bash -s MAGENTO2 clone
     ```
 
 - Open the directory you just cloned
