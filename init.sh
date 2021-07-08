@@ -8,5 +8,4 @@ git config --global core.eol LF
 git config --global core.fileMode false
 git config --global diff.renamelimit 5000
 
-sed -i docker-compose.yml -e "s/<project_name>/$1/g" &&
-    sed -i docker-compose.dev.yml -e "s/<project_name>/$1/g"
+sed -i docker-compose.yml -e "s/<project_name>/$1/g"

@@ -7,6 +7,7 @@ version: "3"
 
 services:
   app:
+    container_name: app
     image: markoshust/magento-nginx:1.18-4
     ports:
       - "80:8000"
@@ -18,20 +19,25 @@ services:
       - <project_name>-appdata:/var/www/html
       - <project_name>-sockdata:/sock
       - <project_name>-ssldata:/etc/nginx/certs
+      - ./env/nginx.conf.sample:/var/www/html/nginx.conf:cached
+      - ./src:/var/www/html:cached
     networks:
       - <project_name>-network
 
 
   phpfpm:
+    container_name: phpfpm
     image: markoshust/magento-php:7.3-fpm-12
     links:
       - db
     volumes: *<project_name>-appvolumes
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
     networks:
       - <project_name>-network
 
-
   db:
+    container_name: db
     image: percona:5.7
     command: --max_allowed_packet=64M
     ports:
@@ -42,13 +48,14 @@ services:
     networks:
       - <project_name>-network
 
-
   redis:
+    container_name: redis
     image: redis:5.0-alpine
     networks:
       - <project_name>-network
 
   elasticsearch:
+    container_name: elasticsearch
     image: markoshust/magento-elasticsearch:7.7.1-0
     ports:
       - "9200:9200"
@@ -60,6 +67,7 @@ services:
       - <project_name>-network
 
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:3.7-management-alpine
     ports:
       - "15672:15672"
@@ -71,13 +79,23 @@ services:
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
-  #  image: markoshust/magento-php:7.4-fpm-5
+  #  container_name: cron
+  #  image: markoshust/magento-php:7.3-fpm-12
   #  user: root
   #  command: /usr/local/bin/cronstart
   #  tty: true
   #  links:
   #    - db
   #  volumes: *<project_name>-appvolumes
+
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog
+    ports:
+      - "1025"
+      - "8025:8025"
+    networks:
+      - <project_name>-network
 
 networks:
   <project_name>-network:
