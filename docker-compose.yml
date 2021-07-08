@@ -16,7 +16,6 @@ services:
       - db
       - phpfpm
     volumes: &<project_name>-appvolumes
-      - <project_name>-appdata:/var/www/html
       - <project_name>-sockdata:/sock
       - <project_name>-ssldata:/etc/nginx/certs
       - ./env/nginx.conf.sample:/var/www/html/nginx.conf:cached
@@ -102,7 +101,6 @@ networks:
     driver: bridge
 
 volumes:
-  <project_name>-appdata:
   <project_name>-dbdata:
   <project_name>-rabbitmqdata:
   <project_name>-sockdata:
