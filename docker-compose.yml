@@ -89,6 +89,17 @@ services:
     networks:
       - <project_name>-network
 
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    ports:
+      - 9999:8080
+    networks:
+      - <project_name>-network
+
 networks:
   <project_name>-network:
     driver: bridge
