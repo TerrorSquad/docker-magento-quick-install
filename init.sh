@@ -9,3 +9,5 @@ git config --global core.fileMode false
 git config --global diff.renamelimit 5000
 
 sed -i docker-compose.yml -e "s/<project_name>/$1/g"
+cp env/default.conf.sample env/default.conf &&
+    cp env/nginx.conf.sample env/nginx.conf
