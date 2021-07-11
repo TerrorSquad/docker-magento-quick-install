@@ -30,6 +30,11 @@ Below you will find the required steps to set up everything.
     cp config/env.php src/app/etc
     ```
 
+- (OPTIONAL): Edit the `config/nginx/default.conf` and `config/nginx/nginx.conf` files
+    > You might want to add mappings to the default.conf
+    >
+    > Or to enable/disable certain endpoints in nginx.conf
+
 - Start the docker containers
 
   ```bash
