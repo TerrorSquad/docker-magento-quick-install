@@ -4,7 +4,7 @@ STORES=$(bin/mysql <"config/sql/get_stores.sql" | tail -n -1 | jq)
 # NUMBER_OF_STORES=$(echo "$STORES" | jq 'length')
 
 printf 'map $http_host $MAGE_RUN_CODE {\n'
-printf '  %s\n' "default $(echo "$STORES" | jq -r '.[1].code')"
+printf '  %s\n' "default $(echo "$STORES" | jq -r '.[1].code')"';'
 
 COUNTER=0
 for STORE in $(echo $STORES | jq -r '.[].code'); do
