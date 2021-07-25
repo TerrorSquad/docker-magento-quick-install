@@ -9,7 +9,7 @@ printf '  %s\n' "default $(echo "$STORES" | jq -r '.[1].code')"
 COUNTER=0
 for STORE in $(echo $STORES | jq -r '.[].code'); do
     if [[ "$COUNTER" -gt 0 ]]; then
-        printf '  %s\n' 'magento-'"$STORE"'.test '"$STORE"
+        printf '  %s\n' 'magento-'"$STORE"'.test '"$STORE"';'
     fi
     COUNTER="$COUNTER+1"
 done
