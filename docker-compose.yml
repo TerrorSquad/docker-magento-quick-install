@@ -94,7 +94,7 @@ services:
     image: amir20/dozzle:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    restart: always
+    restart: on-failure
     ports:
       - 9999:8080
     networks:
