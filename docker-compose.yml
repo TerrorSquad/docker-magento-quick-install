@@ -25,7 +25,7 @@ services:
 
 
   phpfpm:
-    image: markoshust/magento-php:7.3-fpm-12
+    image: markoshust/magento-php:7.3-fpm
     links:
       - db
     volumes: *project_name-appvolumes
