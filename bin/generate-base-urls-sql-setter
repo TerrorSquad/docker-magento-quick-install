@@ -4,6 +4,7 @@ set -ex
 STORES=$(bin/mysql <"config/sql/get_stores.sql" | tail -n -1 | jq)
 
 echo "use magento;"
+echo "DELETE FROM core_config_data WHERE path LIKE 'web/%/base%url';"
 
 COUNTER=0
 for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
@@ -27,28 +28,28 @@ for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
         SECURE_BASE_STATIC_URL=$SECURE_BASE_URL"static"
         UNSECURE_BASE_STATIC_URL=$UNSECURE_BASE_URL"static"
 
-        SQL_SECURE_BASE_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${SECURE_BASE_URL}', 'web/secure/base_url', ${STORE_ID});"
+        SQL_SECURE_BASE_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${SECURE_BASE_URL}', 'web/secure/base_url', ${STORE_ID}, 'stores');"
         echo $SQL_SECURE_BASE_URL
 
-        SQL_UNSECURE_BASE_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${UNSECURE_BASE_URL}', 'web/unsecure/base_url', ${STORE_ID});"
+        SQL_UNSECURE_BASE_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${UNSECURE_BASE_URL}', 'web/unsecure/base_url', ${STORE_ID}, 'stores');"
         echo $SQL_UNSECURE_BASE_URL
 
-        SQL_SECURE_BASE_LINK_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${SECURE_BASE_LINK_URL}', 'web/secure/base_link_url', ${STORE_ID});"
+        SQL_SECURE_BASE_LINK_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${SECURE_BASE_LINK_URL}', 'web/secure/base_link_url', ${STORE_ID}, 'stores');"
         echo $SQL_SECURE_BASE_LINK_URL
 
-        SQL_UNSECURE_BASE_LINK_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${UNSECURE_BASE_LINK_URL}', 'web/unsecure/base_link_url', ${STORE_ID});"
+        SQL_UNSECURE_BASE_LINK_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${UNSECURE_BASE_LINK_URL}', 'web/unsecure/base_link_url', ${STORE_ID}, 'stores');"
         echo $SQL_UNSECURE_BASE_LINK_URL
 
-        SQL_SECURE_BASE_MEDIA_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${SECURE_BASE_MEDIA_URL}', 'web/secure/base_media_url', ${STORE_ID});"
+        SQL_SECURE_BASE_MEDIA_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${SECURE_BASE_MEDIA_URL}', 'web/secure/base_media_url', ${STORE_ID}, 'stores');"
         echo $SQL_SECURE_BASE_MEDIA_URL
 
-        SQL_UNSECURE_BASE_MEDIA_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${UNSECURE_BASE_MEDIA_URL}', 'web/unsecure/base_media_url', ${STORE_ID});"
+        SQL_UNSECURE_BASE_MEDIA_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${UNSECURE_BASE_MEDIA_URL}', 'web/unsecure/base_media_url', ${STORE_ID}, 'stores');"
         echo $SQL_UNSECURE_BASE_MEDIA_URL
 
-        SQL_SECURE_BASE_STATIC_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${SECURE_BASE_STATIC_URL}', 'web/secure/base_static_url', ${STORE_ID});"
+        SQL_SECURE_BASE_STATIC_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${SECURE_BASE_STATIC_URL}', 'web/secure/base_static_url', ${STORE_ID}, 'stores');"
         echo $SQL_SECURE_BASE_STATIC_URL
 
-        SQL_UNSECURE_BASE_STATIC_URL="REPLACE INTO core_config_data (value, path, scope_id) VALUES ('${UNSECURE_BASE_STATIC_URL}', 'web/unsecure/base_static_url', ${STORE_ID});"
+        SQL_UNSECURE_BASE_STATIC_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${UNSECURE_BASE_STATIC_URL}', 'web/unsecure/base_static_url', ${STORE_ID}, 'stores');"
         echo $SQL_UNSECURE_BASE_STATIC_URL
 
     fi
