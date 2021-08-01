@@ -7,3 +7,4 @@ bin/generate-base-urls-sql-setter >config/sql/base_urls_setter.sql
 bin/mysql <config/sql/base_urls_setter.sql
 
 bin/mysql <config/sql/elastic_search_setter.sql
+bin/mysql <config/sql/other_settings.sql
