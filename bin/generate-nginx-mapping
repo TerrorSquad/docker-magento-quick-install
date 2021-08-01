@@ -12,7 +12,7 @@ for STORE in $(echo $STORES | jq -r '.[].code'); do
     if [[ "$COUNTER" -gt 0 ]]; then
         printf '  %s\n' 'magento-'"$STORE"'.test '"$STORE"';'
     fi
-    COUNTER="$COUNTER+1"
+    COUNTER=$(("$COUNTER+1"))
 done
 
 printf '%s\n' "}"
