@@ -52,6 +52,9 @@ services:
 
   elasticsearch:
     image: markoshust/magento-elasticsearch:7.7.1-0
+    # build:
+    #   context: ./src/elasticsearch
+    #   dockerfile: Dockerfile
     ports:
       - "9200:9200"
       - "9300:9300"
