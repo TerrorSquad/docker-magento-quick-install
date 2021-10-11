@@ -40,6 +40,10 @@ services:
     ports:
       - "3306:3306"
     env_file: env/db.env
+    healthcheck:
+      test: ["CMD", 'mysqladmin' ,'ping', '-h','localhost', '-u', 'root', '-pmagento'] # TODO: Use variables here
+      interval: 1s
+      retries: 120
     volumes:
       - project_name-dbdata:/var/lib/mysql
     networks:
