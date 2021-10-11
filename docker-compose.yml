@@ -41,9 +41,9 @@ services:
       - "3306:3306"
     env_file: env/db.env
     healthcheck:
-      test: ["CMD", 'mysqladmin' ,'ping', '-h','localhost', '-u', 'root', '-pmagento'] # TODO: Use variables here
-      interval: 1s
-      retries: 120
+      test: "/usr/bin/mysql --user=root --password=magento --execute \"SHOW DATABASES;\""
+      retries: 5
+      interval: 5s
     volumes:
       - project_name-dbdata:/var/lib/mysql
     networks:
