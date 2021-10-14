@@ -1,0 +1,7 @@
+#!/bin/bash
+if ! bin/clinotty ls /usr/local/bin/pestle.phar 1>/dev/null 2>&1; then
+    bin/clinotty mkdir -p bin
+    bin/rootnotty curl http://pestle.pulsestorm.net/pestle.phar -o /usr/local/bin/pestle.phar
+    bin/rootnotty chmod +x /usr/local/bin/pestle.phar
+fi
+bin/cli /usr/local/bin/pestle.phar "$@"
