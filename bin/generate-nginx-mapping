@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 STORES=$(bin/mysql <"config/sql/get_stores.sql" | tail -n -1 | jq)
 # NUMBER_OF_STORES=$(echo "$STORES" | jq 'length')
