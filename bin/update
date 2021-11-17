@@ -3,4 +3,4 @@ set -o errexit
 PROJECT_NAME=$(basename $(pwd))
 git checkout HEAD --force
 git pull --force
-gsed -i docker-compose.yml -e "s/project_name/$PROJECT_NAME/g"
+sed -i ''  -e "s/project_name/$PROJECT_NAME/g" docker-compose.yml
