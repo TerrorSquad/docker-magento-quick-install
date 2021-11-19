@@ -10,6 +10,10 @@ git config --global core.eol LF
 git config --global core.fileMode false
 git config --global diff.renamelimit 5000
 
-sed -i '' -e "s/project_name/$1/g" docker-compose.yml
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' -e "s/project_name/$1/g" docker-compose.yml
+else
+    sed -i -e "s/project_name/$1/g" docker-compose.yml
+fi
 cp config/nginx/default.conf.sample config/nginx/default.conf &&
     cp config/nginx/nginx.conf.sample config/nginx/nginx.conf
