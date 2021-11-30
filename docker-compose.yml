@@ -7,6 +7,7 @@ version: "3"
 
 services:
   app:
+    platform: linux/x86_64
     image: markoshust/magento-nginx:1.18-4
     ports:
       - "80:8000"
@@ -25,6 +26,7 @@ services:
 
 
   phpfpm:
+    platform: linux/x86_64
     image: markoshust/magento-php:7.3-fpm
     links:
       - db
@@ -35,6 +37,7 @@ services:
       - project_name-network
 
   db:
+    platform: linux/x86_64
     image: percona:5.7
     command: --max_allowed_packet=64M
     ports:
@@ -50,11 +53,13 @@ services:
       - project_name-network
 
   redis:
+    platform: linux/x86_64
     image: redis:5.0-alpine
     networks:
       - project_name-network
 
   elasticsearch:
+    platform: linux/x86_64
     image: markoshust/magento-elasticsearch:7.7.1-0
     # build:
     #   context: ./build/ElasticSearch
@@ -69,6 +74,7 @@ services:
       - project_name-network
 
   rabbitmq:
+    platform: linux/x86_64
     image: rabbitmq:3.7-management-alpine
     ports:
       - "15672:15672"
@@ -90,6 +96,7 @@ services:
   #  volumes: *project_name-appvolumes
 
   mailhog:
+    platform: linux/x86_64
     image: mailhog/mailhog
     ports:
       - "1025"
@@ -98,6 +105,7 @@ services:
       - project_name-network
 
   dozzle:
+    platform: linux/x86_64
     image: amir20/dozzle:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
