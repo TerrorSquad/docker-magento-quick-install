@@ -54,5 +54,5 @@ for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
         SQL_UNSECURE_BASE_STATIC_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${UNSECURE_BASE_STATIC_URL}', 'web/unsecure/base_static_url', '${STORE_ID}', '${SCOPE}');"
         echo "$SQL_UNSECURE_BASE_STATIC_URL"
     fi
-    COUNTER=$(("$COUNTER+1"))
+    COUNTER=$(($COUNTER + 1))
 done

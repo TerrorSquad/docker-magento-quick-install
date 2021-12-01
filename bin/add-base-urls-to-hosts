@@ -12,9 +12,9 @@ for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
     fi
     HOSTS_URL=magento"${SEPARATOR}""${STORE_CODE}".test
     URL_IN_HOSTS_FILE=$(grep -c "$HOSTS_URL" /etc/hosts)
-    if [[ $URL_IN_HOSTS_FILE -eq 0  ]]; then
+    if [[ $URL_IN_HOSTS_FILE -eq 0 ]]; then
         echo "$(printf "\n\n")"127.0.0.1"$(printf "\t")""$HOSTS_URL" | tee -a /etc/hosts
     fi
 
-    COUNTER=$(("$COUNTER+1"))
+    COUNTER=$(($COUNTER + 1))
 done
