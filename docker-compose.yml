@@ -7,8 +7,7 @@ version: "3"
 
 services:
   app:
-    platform: linux/x86_64
-    image: markoshust/magento-nginx:1.18-4
+    image: markoshust/magento-nginx:1.18-5
     ports:
       - "80:8000"
       - "443:8443"
@@ -26,8 +25,8 @@ services:
 
 
   phpfpm:
-    platform: linux/x86_64
-    image: markoshust/magento-php:7.3-fpm
+    image: markoshust/magento-php:7.4-fpm-11
+    env_file: env/phpfpm.env
     links:
       - db
     volumes: *project_name-appvolumes
@@ -37,8 +36,7 @@ services:
       - project_name-network
 
   db:
-    platform: linux/x86_64
-    image: percona:5.7
+    image: mariadb:10.4
     command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
@@ -53,14 +51,14 @@ services:
       - project_name-network
 
   redis:
-    platform: linux/x86_64
     image: redis:5.0-alpine
+    ports:
+      - "6379:6379"
     networks:
       - project_name-network
 
   elasticsearch:
-    platform: linux/x86_64
-    image: markoshust/magento-elasticsearch:7.7.1-0
+    image: markoshust/magento-elasticsearch:7.9.3-1
     # build:
     #   context: ./build/ElasticSearch
     #   dockerfile: Dockerfile
@@ -70,19 +68,22 @@ services:
     environment:
       - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "cluster.routing.allocation.disk.threashold_enabled=false"
+      - "index.blocks.read_only_allow_delete"
     networks:
       - project_name-network
 
   rabbitmq:
-    platform: linux/x86_64
-    image: rabbitmq:3.7-management-alpine
+    image: rabbitmq:3.8.22-management-alpine
     ports:
       - "15672:15672"
       - "5672:5672"
     volumes:
       - project_name-rabbitmqdata:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=1GB
     networks:
-        - project_name-network
+      - project_name-network
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
@@ -95,17 +96,14 @@ services:
   #    - db
   #  volumes: *project_name-appvolumes
 
-  mailhog:
-    platform: linux/x86_64
-    image: mailhog/mailhog
+  mailcatcher:
+    image: sj26/mailcatcher
     ports:
-      - "1025"
-      - "8025:8025"
+      - "1080:1080"
     networks:
       - project_name-network
 
   dozzle:
-    platform: linux/x86_64
     image: amir20/dozzle:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
