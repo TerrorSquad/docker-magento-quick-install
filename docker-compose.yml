@@ -36,7 +36,7 @@ services:
       - project_name-network
 
   db:
-    image: mariadb:10.5
+    image: mysql:8
     command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
