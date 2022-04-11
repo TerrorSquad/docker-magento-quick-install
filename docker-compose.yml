@@ -20,6 +20,9 @@ services:
       - ./config/nginx/nginx.conf:/var/www/html/nginx.conf:delegated
       - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf:delegated
       - ./src:/var/www/html
+      - ~/.ssh:/home/app/.ssh:ro
+      - ~/.ssh:/root/.ssh:ro
+      - ~/.ssh:/var/www/.ssh:ro
     networks:
       - project_name-network
 
