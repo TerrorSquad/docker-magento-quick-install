@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+bin/generate-nginx-mapping >config/nginx/mapping.nginx.conf
+cd config/nginx && cat mapping.nginx.conf >default.conf && cat default.conf.sample >>default.conf && cp nginx.conf.store.sample nginx.conf
