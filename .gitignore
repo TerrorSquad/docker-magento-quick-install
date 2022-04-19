@@ -1,1 +1,3 @@
 src/
+config/nginx/mapping.nginx.conf
+config/sql/base_urls_setter.sql
