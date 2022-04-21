@@ -54,6 +54,12 @@ for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
 
         SQL_UNSECURE_BASE_STATIC_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${UNSECURE_BASE_STATIC_URL}', 'web/unsecure/base_static_url', '${STORE_ID}', '${SCOPE}');"
         echo "$SQL_UNSECURE_BASE_STATIC_URL"
+
+        SQL_WEB_COOKIE_DOMAIN="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${UNSECURE_BASE_URL}', 'web/cookie/cookie_domain', '${STORE_ID}', '${SCOPE}');"
+        echo "$SQL_WEB_COOKIE_DOMAIN"
+
+        SQL_WEB_COOKIE_PATH="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('/', 'web/cookie/cookie_path', '${STORE_ID}', '${SCOPE}');"
+        echo "$SQL_WEB_COOKIE_PATH"
     fi
     COUNTER=$(($COUNTER + 1))
 done
