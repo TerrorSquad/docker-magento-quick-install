@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-STORES=$(bin/mysql <config/sql/get_stores_for_base_urls.sql | tail -n-1 | sed -e 's/\\\\//g' | sed -e 's\"{\{\g' | sed -e 's\}"\}\g' | jq)
+STORES=$(bin/mysql <config/sql/get_stores.sql | tail -n-1 | sed -e 's/\\\\//g' | sed -e 's\"{\{\g' | sed -e 's\}"\}\g' | jq)
 
 echo "use magento;"
 echo "DELETE FROM core_config_data WHERE path LIKE 'web/%/base%url';"
@@ -16,6 +16,7 @@ for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
         if [[ ${STORE_ID} -gt 1 ]]; then
             SEPARATOR="-"
             STORE_CODE=$(echo "$STORES" | jq -r ".[${COUNTER}].code")
+            STORE_CODE=$(echo "$STORE_CODE" | sed -e 's/_/-/g')
             SCOPE="stores"
         fi
         SECURE_BASE_URL="https://magento${SEPARATOR}${STORE_CODE}.test/"
@@ -24,11 +25,11 @@ for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
         SECURE_BASE_LINK_URL="https://magento${SEPARATOR}${STORE_CODE}.test/"
         UNSECURE_BASE_LINK_URL="https://magento${SEPARATOR}${STORE_CODE}.test/"
 
-        SECURE_BASE_MEDIA_URL=$SECURE_BASE_URL"media"
-        UNSECURE_BASE_MEDIA_URL=$UNSECURE_BASE_URL"media"
+        SECURE_BASE_MEDIA_URL=$SECURE_BASE_URL"media/"
+        UNSECURE_BASE_MEDIA_URL=$UNSECURE_BASE_URL"media/"
 
-        SECURE_BASE_STATIC_URL=$SECURE_BASE_URL"static"
-        UNSECURE_BASE_STATIC_URL=$UNSECURE_BASE_URL"static"
+        SECURE_BASE_STATIC_URL=$SECURE_BASE_URL"static/"
+        UNSECURE_BASE_STATIC_URL=$UNSECURE_BASE_URL"static/"
 
         SQL_SECURE_BASE_URL="REPLACE INTO core_config_data (value, path, scope_id, scope) VALUES ('${SECURE_BASE_URL}', 'web/secure/base_url', '${STORE_ID}', '${SCOPE}');"
         echo "$SQL_SECURE_BASE_URL"

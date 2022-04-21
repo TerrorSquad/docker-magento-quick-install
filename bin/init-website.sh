@@ -5,6 +5,7 @@ source env/db.env
 bin/mysql <config/sql/set_default_website.sql
 bin/generate-base-urls-sql-setter >config/sql/base_urls_setter.sql
 bin/mysql <config/sql/base_urls_setter.sql
+bin/update-nginx-config
 
 bin/mysql <config/sql/elastic_search_setter.sql
 bin/mysql <config/sql/other_settings.sql
