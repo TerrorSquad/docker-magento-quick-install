@@ -3,8 +3,16 @@ version: "3"
 services:
   app:
     volumes: &appvolumes
-      - ./src/nginx.conf.sample:/var/www/html/nginx.conf:cached
-      - ./src:/var/www/html:cached
+      # - ./src/nginx.conf.sample:/var/www/html/nginx.conf:cached
+      - ./src:/var/www/html
 
   phpfpm:
     volumes: *appvolumes
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file: env/db.env
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
