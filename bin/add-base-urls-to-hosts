@@ -1,21 +1,24 @@
 #!/bin/bash
 
-STORES=$(bin/mysql <config/sql/get_stores.sql | tail -n-1 | sed -e 's/\\\\//g' | sed -e 's\"{\{\g' | sed -e 's\}"\}\g' | jq)
+STORES=$(bin/n98-magerun2 sys:store:list --format=csv | grep -v Warning | sed '/^$/d' | tail -n+2)
 
-COUNTER=0
-for STORE_ID in $(echo "$STORES" | jq -r '.[].store_id'); do
+NEWLINE_PRINTED=false
+for STORE in $STORES; do
     SEPARATOR=""
     STORE_CODE=""
+    STORE_ID=$(echo "$STORE" | cut -d ',' -f1)
     if [[ ${STORE_ID} -gt 1 ]]; then
         SEPARATOR="-"
-        STORE_CODE=$(echo "$STORES" | jq -r ".[${COUNTER}].code")
-        STORE_CODE=$(echo "$STORE_CODE" | sed -e 's/_/-/g')
+        STORE_CODE=$(echo "$STORE" | cut -d ',' -f2)
+        STORE_CODE="${STORE_CODE//_/-}"
     fi
     HOSTS_URL=magento"${SEPARATOR}""${STORE_CODE}".test
     URL_IN_HOSTS_FILE=$(grep -c "$HOSTS_URL" /etc/hosts)
     if [[ $URL_IN_HOSTS_FILE -eq 0 ]]; then
-        echo "$(printf "\n\n")"127.0.0.1"$(printf "\t")""$HOSTS_URL" | tee -a /etc/hosts
+        if [[ $NEWLINE_PRINTED == false ]]; then
+            echo | sudo tee -a /etc/hosts
+            NEWLINE_PRINTED=true
+        fi
+        echo 127.0.0.1"$(printf "\t")""$HOSTS_URL" | sudo tee -a /etc/hosts
     fi
-
-    COUNTER=$(($COUNTER + 1))
 done
