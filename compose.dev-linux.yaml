@@ -8,11 +8,3 @@ services:
 
   phpfpm:
     volumes: *appvolumes
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    env_file: env/db.env
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
