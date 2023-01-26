@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-STORES=$(bin/n98-magerun2 sys:store:list --format=csv | grep -v Warning | sed '/^$/d' | tail -n+2)
+STORES=$(bin/n98-magerun2 sys:store:list --format=csv | grep -v Warning | sed '/^$/d' | tail -n+1)
 
 # echo "use magento;"
 echo "DELETE FROM core_config_data WHERE path LIKE 'web/%/base%url';"
@@ -11,6 +11,10 @@ for STORE in $STORES; do
     SEPARATOR=""
     SCOPE="default"
     STORE_ID=$(echo "$STORE" | cut -d ',' -f1)
+    if [[ ${STORE_ID} = "id" ]]; then
+        SCOPE="default"
+        STORE_ID=0
+    fi
     if [[ ${STORE_ID} -gt 1 ]]; then
         SEPARATOR="-"
         STORE_CODE=$(echo "$STORE" | cut -d ',' -f2)
